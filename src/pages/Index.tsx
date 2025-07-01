@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import Header from '../components/Header';
 import RecommendedCarousel from '../components/RecommendedCarousel';
@@ -30,7 +29,8 @@ const Index = () => {
       cost: 200,
       category: 'Fitness',
       categoryIcon: '💪',
-      image: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=250&fit=crop'
+      image:
+        'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&h=250&fit=crop',
     },
     {
       id: '2',
@@ -39,25 +39,30 @@ const Index = () => {
       cost: 500,
       category: 'Evento',
       categoryIcon: '🎭',
-      image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=250&fit=crop'
+      image:
+        'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=250&fit=crop',
     },
     {
       id: '3',
       title: 'Día de Spa',
-      description: 'Sesión de Spa completa. Incluye facial, masaje y acceso al sauna todo el día.',
+      description:
+        'Sesión de Spa completa. Incluye facial, masaje y acceso al sauna todo el día.',
       cost: 150,
       category: 'Bienestar',
       categoryIcon: '🌸',
-      image: 'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=250&fit=crop'
+      image:
+        'https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=400&h=250&fit=crop',
     },
     {
       id: '4',
       title: '50% dscto. Brunch Alma',
-      description: 'Horario entre 9:00 a 14:00 hrs, cualquier día de la semana.',
+      description:
+        'Horario entre 9:00 a 14:00 hrs, cualquier día de la semana.',
       cost: 50,
       category: 'Gourmet',
       categoryIcon: '🍴',
-      image: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=250&fit=crop'
+      image:
+        'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?w=400&h=250&fit=crop',
     },
     {
       id: '5',
@@ -66,7 +71,8 @@ const Index = () => {
       cost: 75,
       category: 'Bienestar',
       categoryIcon: '🧘',
-      image: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=250&fit=crop'
+      image:
+        'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=400&h=250&fit=crop',
     },
     {
       id: '6',
@@ -75,8 +81,9 @@ const Index = () => {
       cost: 300,
       category: 'Gourmet',
       categoryIcon: '🍽️',
-      image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=250&fit=crop'
-    }
+      image:
+        'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=400&h=250&fit=crop',
+    },
   ];
 
   const handleBenefitClick = (benefit: Benefit) => {
@@ -89,7 +96,7 @@ const Index = () => {
       if (userTokens >= selectedBenefit.cost) {
         setUserTokens(prev => prev - selectedBenefit.cost);
         toast.success(`¡${selectedBenefit.title} canjeado exitosamente!`, {
-          description: 'Recibirás un correo con los detalles en breve.'
+          description: 'Recibirás un correo con los detalles en breve.',
         });
         setIsModalOpen(false);
         setSelectedBenefit(null);
@@ -105,34 +112,37 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50">
-      <Header 
-        tokens={userTokens} 
+    <div className='min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50'>
+      <Header
+        tokens={userTokens}
         onTabChange={setActiveTab}
         activeTab={activeTab}
       />
-      
-      <main className="pb-20">
+
+      <main className='pb-20'>
         {activeTab === 'beneficios' ? (
           <>
-            <RecommendedCarousel 
+            <RecommendedCarousel
               benefits={benefits.slice(0, 3)}
               onBenefitClick={handleBenefitClick}
             />
-            <ExploreSection 
+            <ExploreSection
               benefits={benefits}
               onBenefitClick={handleBenefitClick}
             />
           </>
         ) : (
-          <div className="px-4 py-8 text-center">
-            <div className="bg-white rounded-2xl p-8 shadow-lg">
-              <div className="text-6xl mb-4">🎯</div>
-              <h2 className="text-2xl font-bold mb-4 text-gray-800">Desafíos Semanales</h2>
-              <p className="text-gray-600 mb-6">
-                Completa desafíos semanales y gana tokens extra para canjear más beneficios.
+          <div className='px-4 py-8 text-center'>
+            <div className='bg-white rounded-2xl p-8 shadow-lg'>
+              <div className='text-6xl mb-4'>🎯</div>
+              <h2 className='text-2xl font-bold mb-4 text-gray-800'>
+                Desafíos Semanales
+              </h2>
+              <p className='text-gray-600 mb-6'>
+                Completa desafíos semanales y gana tokens extra para canjear más
+                beneficios.
               </p>
-              <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl inline-block font-medium">
+              <div className='bg-gradient-to-r from-purple-500 to-pink-500 text-white px-6 py-3 rounded-xl inline-block font-medium'>
                 Próximamente
               </div>
             </div>

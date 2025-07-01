@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import BenefitCard from './BenefitCard';
 
@@ -20,7 +19,7 @@ interface RecommendedCarouselProps {
 
 const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
   benefits,
-  onBenefitClick
+  onBenefitClick,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(1); // Start with middle item
 
@@ -29,28 +28,28 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
   };
 
   return (
-    <div className="mb-8">
-      <h2 className="text-xl font-bold text-gray-800 mb-4 px-4">
+    <div className='mb-8'>
+      <h2 className='text-xl font-bold text-gray-800 mb-4 px-4'>
         Recomendados Para Ti
       </h2>
-      
-      <div className="relative px-4">
-        <div className="flex gap-4 overflow-hidden">
+
+      <div className='relative px-4'>
+        <div className='flex gap-4 overflow-hidden'>
           {benefits.map((benefit, index) => {
             const isActive = index === currentIndex;
             const isPrev = index === currentIndex - 1;
             const isNext = index === currentIndex + 1;
-            
-            let cardClass = "transition-all duration-500 flex-shrink-0";
-            let cardWidth = "w-64";
-            
+
+            let cardClass = 'transition-all duration-500 flex-shrink-0';
+            let cardWidth = 'w-64';
+
             if (isActive) {
-              cardClass += " scale-105 z-10";
-              cardWidth = "w-72";
+              cardClass += ' scale-105 z-10';
+              cardWidth = 'w-72';
             } else if (isPrev || isNext) {
-              cardClass += " scale-95 opacity-70";
+              cardClass += ' scale-95 opacity-70';
             } else {
-              cardClass += " scale-90 opacity-40";
+              cardClass += ' scale-90 opacity-40';
             }
 
             return (
@@ -69,7 +68,7 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
         </div>
 
         {/* Dots indicator */}
-        <div className="flex justify-center mt-6 gap-2">
+        <div className='flex justify-center mt-6 gap-2'>
           {benefits.map((_, index) => (
             <button
               key={index}
