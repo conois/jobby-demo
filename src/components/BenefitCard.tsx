@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 interface Benefit {
   id: string;
@@ -24,6 +25,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
   className = '',
   variant = 'default',
 }) => {
+  const navigate = useNavigate();
   const handleClick = () => {
     onClick(benefit);
   };
@@ -83,8 +85,15 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
               {benefit.cost}
             </span>
 
-            <div className='flex direction-normal gap-2 items-end'>
-              <button className='font-sans font-medium inline-flex items-center gap-2 rounded-full p-2 bg-transparent hover:border-2 hover:border-[#D64E3C] text-white justify-center'>
+            {/* Acciones en la parte inferior de la card */}
+            <div className='flex direction-normal gap-2 items-end mt-4'>
+              <button
+                onClick={e => {
+                  e.stopPropagation();
+                  navigate(`/beneficio/${benefit.id}`);
+                }}
+                className='font-sans font-medium inline-flex items-center gap-2 rounded-full p-2 bg-transparent hover:border-2 hover:border-[#D64E3C] text-white justify-center'
+              >
                 <span className='material-icons'>visibility</span>
               </button>
               <button className='bg-[#D64E3C] font-sans font-medium inline-flex items-center gap-2 rounded-full w-full max-w-40 px-5 py-2 text-white justify-center max-h-11'>
@@ -96,7 +105,13 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
       </div>
       {/* Overlay de hover para carousel */}
       {variant === 'carousel' && (
-        <div className='absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20'>
+        <div
+          className='absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20 cursor-pointer'
+          onClick={e => {
+            e.stopPropagation();
+            navigate(`/beneficio/${benefit.id}`);
+          }}
+        >
           <span
             className='text-white text-lg font-semibold'
             style={{ fontFamily: 'Sora, sans-serif' }}
