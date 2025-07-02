@@ -34,13 +34,14 @@ const Index = () => {
     },
     {
       id: '2',
-      title: 'Entrada VIP Concierto',
-      description: 'Acceso preferencial y Meet & Greet con el artista.',
-      cost: 500,
+      title: 'Espectáculo de Danza Contemporánea',
+      description:
+        'Entrada VIP a espectáculo de danza contemporánea con acceso preferencial y encuentro con los bailarines.',
+      cost: 350,
       category: 'Evento',
       categoryIcon: '🎭',
       image:
-        'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=400&h=250&fit=crop',
+        'https://images.unsplash.com/photo-1547153760-18fc86324498?w=400&h=250&fit=crop',
     },
     {
       id: '3',
@@ -55,7 +56,7 @@ const Index = () => {
     },
     {
       id: '4',
-      title: '50% dscto. Brunch Alma',
+      title: 'Brunch en Alma Brunch and Coffe',
       description:
         'Horario entre 9:00 a 14:00 hrs, cualquier día de la semana.',
       cost: 50,
@@ -112,18 +113,18 @@ const Index = () => {
   };
 
   return (
-    <div className='min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-indigo-50'>
+    <div className='min-h-screen bg-gradient-to-br from-purple-50 via-pink-50 to-pink-200'>
       <Header
         tokens={userTokens}
         onTabChange={setActiveTab}
         activeTab={activeTab}
       />
 
-      <main className='pb-20'>
+      <main className='pb-20 mx-auto'>
         {activeTab === 'beneficios' ? (
           <>
             <RecommendedCarousel
-              benefits={benefits.slice(0, 3)}
+              benefits={benefits}
               onBenefitClick={handleBenefitClick}
             />
             <ExploreSection

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BenefitCard from './BenefitCard';
 
 interface Benefit {
@@ -36,6 +36,14 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
   const repeatedBenefits = repeatArray(benefits, CAROUSEL_SIZE);
   const [currentIndex, setCurrentIndex] = useState(0); // Central
 
+  // Avance automático cada 7 segundos
+  useEffect(() => {
+    const interval = setInterval(() => {
+      goToNext();
+    }, 7000);
+    return () => clearInterval(interval);
+  }, [currentIndex, repeatedBenefits.length]);
+
   // Circular next/prev
   const goToNext = () => {
     setCurrentIndex(prev => (prev + 1) % repeatedBenefits.length);
@@ -58,89 +66,65 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
   };
   const visibleBenefits = getVisibleBenefits();
 
-  // Transición suave usando translateX
-  // El slide central siempre está en el medio (índice 2)
-  const slideWidth = 280; // px, aprox. w-[248px] + gap
-  const activeSlideWidth = 420; // px, aprox. w-[380px] + gap
-  // Calculamos el desplazamiento para centrar la card activa
-  const offset = -(slideWidth * 2 + (activeSlideWidth - slideWidth) / 2);
-
   return (
-    <div className='my-10'>
-      <h2 className='text-xl font-bold text-gray-800 mb-4 px-8'>
-        Recomendados Para Ti
-      </h2>
-      <div className='relative px-4 w-full'>
+    <div className='my-10 overflow-x-hidden'>
+      <div className='w-10/12 mx-auto'>
+        <h2 className='text-xl font-bold text-gray-800 pt-[35px] mb-[-50px]'>
+          Recomendados Para Ti
+        </h2>
+      </div>
+
+      <div className='relative w-full mx-auto'>
         <div className='flex items-center gap-2 justify-center'>
-          {/* Flecha izquierda */}
-          <button
-            onClick={goToPrev}
-            className='flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 mr-2 bg-purple-200 text-purple-700 hover:bg-purple-500 hover:text-white shadow-md border-2 border-purple-300'
-            aria-label='Anterior'
-          >
-            <span className='text-lg'>&#8592;</span>
-          </button>
-          <div
-            className='overflow-hidden w-[1400px] max-w-full'
-            style={{ minWidth: 0 }}
-          >
-            <div className='flex gap-4 justify-center transition-transform duration-500'>
-              {visibleBenefits.map((benefit, idx) => {
-                // La card central es la activa
-                const isActive = idx === 2;
-                const isPrev = idx === 1;
-                const isNext = idx === 3;
-                let cardClass = 'transition-all duration-500 flex-shrink-0';
-                let cardWidth = 'w-[248px]';
-                if (isActive) {
-                  cardClass += ' scale-105 z-10';
-                  cardWidth = 'w-[380px]';
-                } else if (isPrev || isNext) {
-                  cardClass += ' scale-95 opacity-70';
-                } else {
-                  cardClass += ' scale-90 opacity-40';
-                }
-                return (
+          <div className='flex gap-4 justify-center transition-transform duration-500 items-end'>
+            {visibleBenefits.map((benefit, idx) => {
+              // La card central es la activa
+              const isActive = idx === 2;
+              const isPrev = idx === 1;
+              const isNext = idx === 3;
+              let cardClass = 'transition-all duration-500 flex-shrink-0';
+              let cardWidth = 'w-[400px]';
+              if (isActive) {
+                cardClass += ' scale-105 z-10';
+                cardWidth = 'w-[420px]';
+              } else if (isPrev || isNext) {
+                cardClass += ' scale-95 opacity-70';
+              } else {
+                cardClass += ' scale-90 opacity-40';
+              }
+              return (
+                <div
+                  key={benefit.id + '-' + idx}
+                  className='flex flex-col items-center'
+                >
                   <div
-                    key={benefit.id + '-' + idx}
-                    className='flex flex-col items-center'
+                    className={`${cardClass} ${cardWidth}`}
+                    onClick={() =>
+                      setCurrentIndex(
+                        (currentIndex + idx - 2 + repeatedBenefits.length) %
+                          repeatedBenefits.length
+                      )
+                    }
                   >
-                    <div
-                      className={`${cardClass} ${cardWidth}`}
-                      onClick={() =>
-                        setCurrentIndex(
-                          (currentIndex + idx - 2 + repeatedBenefits.length) %
-                            repeatedBenefits.length
-                        )
-                      }
-                    >
-                      <BenefitCard
-                        benefit={{ ...benefit, featured: isActive }}
-                        onClick={onBenefitClick}
-                      />
-                    </div>
-                    {/* Botón solo para la card activa */}
-                    {isActive && (
-                      <button
-                        className='mt-6 w-4/5 max-w-[340px] py-3 rounded-full bg-purple-600 text-white font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-purple-700 transition-colors text-base'
-                        onClick={() => onBenefitClick(benefit)}
-                      >
-                        Canjear <span className='text-lg'>→</span>
-                      </button>
-                    )}
+                    <BenefitCard
+                      benefit={{ ...benefit, featured: isActive }}
+                      onClick={onBenefitClick}
+                      variant='carousel'
+                    />
                   </div>
-                );
-              })}
-            </div>
+                  {/* Botón solo para la card activa */}
+                  {isActive && (
+                    <button
+                      className='mt-6 w-4/5 max-w-[340px] py-3 rounded-full bg-purple-600 text-white font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-purple-700 transition-colors text-base'
+                      onClick={() => onBenefitClick(benefit)}
+                    >
+                      Canjear <span className='text-lg'>→</span>
+                    </button>
+                  )}
+                </div>
+              );
+            })}
           </div>
-          {/* Flecha derecha */}
-          <button
-            onClick={goToNext}
-            className='flex items-center justify-center w-8 h-8 rounded-full transition-all duration-200 ml-2 bg-purple-200 text-purple-700 hover:bg-purple-500 hover:text-white shadow-md border-2 border-purple-300'
-            aria-label='Siguiente'
-          >
-            <span className='text-lg'>&#8594;</span>
-          </button>
         </div>
         {/* Dots indicator */}
         <div className='flex justify-center mt-6 gap-2'>
@@ -148,7 +132,7 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
             <button
               key={index}
               onClick={() => setCurrentIndex(index)}
-              className={`w-2 h-2 rounded-full transition-all duration-200 border-2 ${
+              className={`w-8 h-2 rounded-full transition-all duration-200 border-2 ${
                 index === currentIndex
                   ? 'bg-purple-500 border-purple-500 w-6'
                   : 'bg-purple-200 border-purple-300 hover:bg-purple-300'

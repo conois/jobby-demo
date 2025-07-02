@@ -7,6 +7,7 @@ interface CategoryCardProps {
   gradient: string;
   onClick: () => void;
   size?: 'small' | 'medium' | 'large';
+  className?: string;
 }
 
 const CategoryCard: React.FC<CategoryCardProps> = ({
@@ -16,6 +17,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   gradient,
   onClick,
   size = 'medium',
+  className = '',
 }) => {
   const sizeClasses = {
     small: 'p-4 min-h-[120px]',
@@ -26,7 +28,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
   return (
     <div
       onClick={onClick}
-      className={`${gradient} ${sizeClasses[size]} rounded-2xl cursor-pointer card-hover-subtle text-white relative overflow-hidden group`}
+      className={`${gradient} ${sizeClasses[size]} rounded-2xl cursor-pointer card-hover-subtle text-white relative overflow-hidden group ${className}`}
     >
       <div className='relative z-10'>
         <div className='text-2xl mb-3'>{icon}</div>
