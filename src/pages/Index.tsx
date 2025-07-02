@@ -98,11 +98,16 @@ const Index = () => {
         setUserTokens(prev => prev - selectedBenefit.cost);
         toast.success(`¡${selectedBenefit.title} canjeado exitosamente!`, {
           description: 'Recibirás un correo con los detalles en breve.',
+          position: 'top-center',
+          style: { background: '#22c55e', color: 'white' },
         });
         setIsModalOpen(false);
         setSelectedBenefit(null);
       } else {
-        toast.error('No tienes suficientes tokens para este beneficio.');
+        toast.error('No tienes suficientes tokens para este beneficio.', {
+          position: 'top-center',
+          style: { background: '#ef4444', color: 'white' },
+        });
       }
     }
   };
@@ -158,6 +163,10 @@ const Index = () => {
         userTokens={userTokens}
         onConfirm={handleConfirmBenefit}
       />
+
+      <footer className='w-full py-6 text-center text-gray-400 text-sm bg-transparent'>
+        © 2025 Jobby. Todos los derechos reservados.
+      </footer>
     </div>
   );
 };

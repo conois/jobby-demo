@@ -31,7 +31,7 @@ const BenefitModal: React.FC<BenefitModalProps> = ({
 
   return (
     <div className='fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in'>
-      <div className='bg-white rounded-2xl max-w-sm w-full p-6 animate-scale-in'>
+      <div className='bg-white rounded-2xl w-6/12 p-6 animate-scale-in'>
         <div className='flex justify-between items-start mb-4'>
           <h2 className='text-lg font-semibold text-gray-800'>
             Estás a un paso de tu beneficio
@@ -51,17 +51,9 @@ const BenefitModal: React.FC<BenefitModalProps> = ({
             className='w-full h-32 object-cover'
           />
           <div className='absolute inset-0 bg-gradient-to-t from-black/60 to-transparent' />
-          <div className='absolute top-3 left-3'>
-            <span className='bg-black/30 text-white text-xs px-2 py-1 rounded-full'>
-              {benefit.categoryIcon} {benefit.category}
-            </span>
-          </div>
           <div className='absolute bottom-3 left-3 text-white'>
             <h3 className='font-semibold text-lg'>{benefit.title}</h3>
             <p className='text-sm opacity-90'>{benefit.description}</p>
-          </div>
-          <div className='absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white px-2 py-1 rounded-full text-sm font-medium'>
-            💎 {benefit.cost}
           </div>
         </div>
 

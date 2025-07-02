@@ -46,7 +46,14 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
       <div className='absolute bottom-4 left-4 right-4 z-10 flex flex-col'>
         {variant !== 'carousel' && (
           <span className='w-fit border border-white bg-transparent text-white mb-4 font-sans text-[16px] font-medium inline-flex items-center gap-2 rounded-full py-2 px-4'>
-            {benefit.categoryIcon} {benefit.category}
+            {/* Icono de categoría con Material Icons */}
+            <span className='material-icons text-white text-[20px]'>
+              {benefit.category === 'Fitness' && 'fitness_center'}
+              {benefit.category === 'Gourmet' && 'restaurant'}
+              {benefit.category === 'Bienestar' && 'spa'}
+              {benefit.category === 'Evento' && 'event'}
+            </span>
+            {benefit.category}
           </span>
         )}
         <h3
@@ -67,9 +74,24 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
           </p>
         )}
         {variant !== 'carousel' && (
-          <span className='w-fit border border-white bg-white/30 text-white mb-4 font-sans text-[16px] font-medium inline-flex items-center gap-2 rounded-full py-2 px-4'>
-            {benefit.cost}
-          </span>
+          <div className='flex justify-between items-end'>
+            <span className='w-fit border border-white bg-white/30 text-white font-sans text-[16px] font-medium inline-flex items-center gap-2 rounded-full py-2 px-4 mt-4'>
+              {/* Icono de ticket con Material Icons */}
+              <span className='material-icons text-white text-[20px]'>
+                confirmation_number
+              </span>
+              {benefit.cost}
+            </span>
+
+            <div className='flex direction-normal gap-2 items-end'>
+              <button className='font-sans font-medium inline-flex items-center gap-2 rounded-full p-2 bg-transparent hover:border-2 hover:border-[#D64E3C] text-white justify-center'>
+                <span className='material-icons'>visibility</span>
+              </button>
+              <button className='bg-[#D64E3C] font-sans font-medium inline-flex items-center gap-2 rounded-full w-full max-w-40 px-5 py-2 text-white justify-center max-h-11'>
+                Canjear <span className='text-lg'>→</span>
+              </button>
+            </div>
+          </div>
         )}
       </div>
       {/* Overlay de hover para carousel */}

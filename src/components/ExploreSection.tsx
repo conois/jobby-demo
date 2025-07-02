@@ -22,10 +22,26 @@ const ExploreSection: React.FC<ExploreSectionProps> = ({
   onBenefitClick,
 }) => {
   const categories = [
-    { name: 'Gourmet', icon: '🍴', gradient: 'gradient-purple-pink' },
-    { name: 'Fitness', icon: '💪', gradient: 'gradient-purple-blue' },
-    { name: 'Bienestar', icon: '🌸', gradient: 'gradient-pink-orange' },
-    { name: 'Eventos', icon: '🎭', gradient: 'gradient-green-teal' },
+    {
+      name: 'Gourmet',
+      icon: <span className='material-icons text-sm'>restaurant</span>,
+      gradient: 'gradient-purple-pink',
+    },
+    {
+      name: 'Fitness',
+      icon: <span className='material-icons text-sm'>fitness_center</span>,
+      gradient: 'gradient-purple-blue',
+    },
+    {
+      name: 'Bienestar',
+      icon: <span className='material-icons text-sm'>spa</span>,
+      gradient: 'gradient-pink-orange',
+    },
+    {
+      name: 'Eventos',
+      icon: <span className='material-icons text-sm'>event</span>,
+      gradient: 'gradient-green-teal',
+    },
   ];
 
   return (

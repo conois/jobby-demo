@@ -12,8 +12,16 @@ const Header: React.FC<HeaderProps> = ({ tokens, onTabChange, activeTab }) => {
       <div className='mx-auto w-10/12 py-3'>
         <div className='flex justify-between items-center mb-4'>
           <h1 className='text-xl font-bold text-gray-800'>Jobby</h1>
-          <div className='flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1.5 rounded-full'>
-            <span className='text-sm font-medium'>💎 {tokens} Tokens</span>
+          <div className='flex items-center gap-4'>
+            <div className='flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1.5 rounded-full'>
+              <span className='text-sm font-medium'>💎 {tokens} Tokens</span>
+            </div>
+            <span
+              className='material-icons rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'
+              style={{ fontSize: 32, padding: 2 }}
+            >
+              account_circle
+            </span>
           </div>
         </div>
 
