@@ -1,0 +1,34 @@
+# Dependencies
+node_modules/
+dist/
+build/
+
+# Package files
+package-lock.json
+bun.lockb
+yarn.lock
+
+# Generated files
+*.min.js
+*.min.css
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Git
+.git/ 
