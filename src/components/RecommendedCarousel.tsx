@@ -28,24 +28,24 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
   };
 
   return (
-    <div className='mb-8'>
-      <h2 className='text-xl font-bold text-gray-800 mb-4 px-4'>
+    <div className='my-10'>
+      <h2 className='text-xl font-bold text-gray-800 mb-4 px-8'>
         Recomendados Para Ti
       </h2>
 
-      <div className='relative px-4'>
-        <div className='flex gap-4 overflow-hidden'>
+      <div className='relative px-4 w-full'>
+        <div className='flex gap-4 justify-center'>
           {benefits.map((benefit, index) => {
             const isActive = index === currentIndex;
             const isPrev = index === currentIndex - 1;
             const isNext = index === currentIndex + 1;
 
             let cardClass = 'transition-all duration-500 flex-shrink-0';
-            let cardWidth = 'w-64';
+            let cardWidth = 'w-[248px]';
 
             if (isActive) {
               cardClass += ' scale-105 z-10';
-              cardWidth = 'w-72';
+              cardWidth = 'w-[380px]'; // Más ancha para la activa
             } else if (isPrev || isNext) {
               cardClass += ' scale-95 opacity-70';
             } else {
@@ -53,15 +53,25 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
             }
 
             return (
-              <div
-                key={benefit.id}
-                className={`${cardClass} ${cardWidth}`}
-                onClick={() => goToSlide(index)}
-              >
-                <BenefitCard
-                  benefit={{ ...benefit, featured: isActive }}
-                  onClick={onBenefitClick}
-                />
+              <div key={benefit.id} className='flex flex-col items-center'>
+                <div
+                  className={`${cardClass} ${cardWidth}`}
+                  onClick={() => goToSlide(index)}
+                >
+                  <BenefitCard
+                    benefit={{ ...benefit, featured: isActive }}
+                    onClick={onBenefitClick}
+                  />
+                </div>
+                {/* Botón solo para la card activa */}
+                {isActive && (
+                  <button
+                    className='mt-6 w-4/5 max-w-[340px] py-3 rounded-full bg-purple-600 text-white font-semibold flex items-center justify-center gap-2 shadow-md hover:bg-purple-700 transition-colors text-base'
+                    onClick={() => onBenefitClick(benefit)}
+                  >
+                    Canjear <span className='text-lg'>→</span>
+                  </button>
+                )}
               </div>
             );
           })}
