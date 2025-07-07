@@ -1,20 +1,11 @@
-import React from 'react';
-
-interface Benefit {
-  id: string;
-  title: string;
-  description: string;
-  cost: number;
-  category: string;
-  image: string;
-  categoryIcon: string;
-}
+import React, { useState } from 'react';
+import { BenefitData } from '../data/benefits';
+import { useTokens } from '../context/TokensContext';
 
 interface BenefitModalProps {
   isOpen: boolean;
   onClose: () => void;
-  benefit: Benefit | null;
-  userTokens: number;
+  benefit: BenefitData | null;
   onConfirm: () => void;
 }
 
@@ -22,13 +13,90 @@ const BenefitModal: React.FC<BenefitModalProps> = ({
   isOpen,
   onClose,
   benefit,
-  userTokens,
   onConfirm,
 }) => {
+  const [isConfirmed, setIsConfirmed] = useState(false);
+  const { userTokens } = useTokens();
+
   if (!isOpen || !benefit) return null;
 
   const remainingTokens = userTokens - benefit.cost;
 
+  const handleConfirm = () => {
+    setIsConfirmed(true);
+    onConfirm();
+  };
+
+  const handleClose = () => {
+    setIsConfirmed(false);
+    onClose();
+  };
+
+  const handleSuccessClose = () => {
+    setIsConfirmed(false);
+    onClose();
+  };
+
+  // Estado de confirmación exitosa
+  if (isConfirmed) {
+    return (
+      <div className='fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in'>
+        <div className='bg-white rounded-2xl w-6/12 p-6 animate-scale-in'>
+          <div className='text-center'>
+            {/* Ícono de éxito */}
+            <div className='w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4'>
+              <span className='text-3xl'>✅</span>
+            </div>
+
+            {/* Título de éxito */}
+            <h2 className='text-xl font-semibold text-gray-800 mb-2'>
+              ¡Canje Exitoso!
+            </h2>
+
+            {/* Mensaje de confirmación */}
+            <p className='text-gray-600 mb-6'>
+              <span className='font-semibold text-purple-600'>
+                {benefit.title}
+              </span>{' '}
+              ha sido canjeado exitosamente.
+            </p>
+
+            {/* Información adicional */}
+            <div className='bg-green-50 p-4 rounded-lg mb-6'>
+              <div className='flex items-center gap-2 text-green-700'>
+                <span className='text-sm'>📧</span>
+                <p className='text-sm'>
+                  Recibirás un correo con todos los detalles en breve.
+                </p>
+              </div>
+            </div>
+
+            {/* Tokens restantes */}
+            <div className='bg-purple-50 p-3 rounded-lg mb-6'>
+              <div className='flex justify-between items-center'>
+                <span className='font-semibold text-purple-800'>
+                  Tokens Restantes
+                </span>
+                <span className='font-bold text-purple-800 flex items-center gap-1'>
+                  💎 {userTokens}
+                </span>
+              </div>
+            </div>
+
+            {/* Botón para cerrar */}
+            <button
+              onClick={handleSuccessClose}
+              className='w-full py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium hover:scale-105 transition-all'
+            >
+              ¡Perfecto!
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Estado normal del modal
   return (
     <div className='fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4 animate-fade-in'>
       <div className='bg-white rounded-2xl w-6/12 p-6 animate-scale-in'>
@@ -37,7 +105,7 @@ const BenefitModal: React.FC<BenefitModalProps> = ({
             Estás a un paso de tu beneficio
           </h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className='text-gray-400 hover:text-gray-600 transition-colors p-1'
           >
             ✕
@@ -87,13 +155,13 @@ const BenefitModal: React.FC<BenefitModalProps> = ({
 
         <div className='flex gap-3'>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className='flex-1 py-3 px-4 border border-purple-300 text-purple-600 rounded-xl font-medium hover:bg-purple-50 transition-colors'
           >
             Cancelar
           </button>
           <button
-            onClick={onConfirm}
+            onClick={handleConfirm}
             disabled={remainingTokens < 0}
             className='flex-1 py-3 px-4 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-medium button-hover disabled:opacity-50 disabled:cursor-not-allowed'
           >

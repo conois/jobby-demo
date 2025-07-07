@@ -1,20 +1,35 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useTokens } from '../context/TokensContext';
 
 interface HeaderProps {
-  tokens: number;
   onTabChange: (tab: string) => void;
   activeTab: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ tokens, onTabChange, activeTab }) => {
+const Header: React.FC<HeaderProps> = ({ onTabChange, activeTab }) => {
+  const navigate = useNavigate();
+  const { userTokens } = useTokens();
+
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
   return (
     <header className='w-full bg-white/80 backdrop-blur-md border-b border-purple-100 sticky top-0 z-50'>
       <div className='mx-auto w-10/12 py-3'>
         <div className='flex justify-between items-center mb-4'>
-          <h1 className='text-xl font-bold text-gray-800'>Jobby</h1>
+          <h1
+            className='text-xl font-bold text-gray-800 cursor-pointer hover:text-purple-600 transition-colors'
+            onClick={handleLogoClick}
+          >
+            Jobby
+          </h1>
           <div className='flex items-center gap-4'>
             <div className='flex items-center gap-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white px-3 py-1.5 rounded-full'>
-              <span className='text-sm font-medium'>💎 {tokens} Tokens</span>
+              <span className='text-sm font-medium'>
+                💎 {userTokens} Tokens
+              </span>
             </div>
             <span
               className='material-icons rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-md'

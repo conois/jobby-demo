@@ -1,20 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-
-interface Benefit {
-  id: string;
-  title: string;
-  description: string;
-  cost: number;
-  category: string;
-  image: string;
-  categoryIcon: string;
-  featured?: boolean;
-}
+import { BenefitData } from '../data/benefits';
 
 interface BenefitCardProps {
-  benefit: Benefit;
-  onClick: (benefit: Benefit) => void;
+  benefit: BenefitData;
+  onClick: (benefit: BenefitData) => void;
   className?: string;
   variant?: 'default' | 'carousel';
 }
@@ -28,6 +18,25 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
   const navigate = useNavigate();
   const handleClick = () => {
     onClick(benefit);
+  };
+
+  // Función para obtener el ícono de Material Icons basado en la categoría
+  const getCategoryIcon = (category: string) => {
+    const iconMap: { [key: string]: string } = {
+      Gamer: 'sports_esports',
+      Deporte: 'fitness_center',
+      Lifestyle: 'lifestyle',
+      Autocuidado: 'spa',
+      'Panoramas y Familia': 'family_restroom',
+      'Cultura y Artes': 'palette',
+      'Vida Profesional': 'work',
+      'Comidas del mundo': 'restaurant',
+      'Mundo tuercas': 'directions_car',
+      Mascotas: 'pets',
+      'Cervezas y Amigos': 'local_bar',
+      'Hobbies y Pasatiempos': 'hobby',
+    };
+    return iconMap[category] || 'category';
   };
 
   return (
@@ -50,10 +59,7 @@ const BenefitCard: React.FC<BenefitCardProps> = ({
           <span className='w-fit border border-white bg-transparent text-white mb-4 font-sans text-[16px] font-medium inline-flex items-center gap-2 rounded-full py-2 px-4'>
             {/* Icono de categoría con Material Icons */}
             <span className='material-icons text-white text-[20px]'>
-              {benefit.category === 'Fitness' && 'fitness_center'}
-              {benefit.category === 'Gourmet' && 'restaurant'}
-              {benefit.category === 'Bienestar' && 'spa'}
-              {benefit.category === 'Evento' && 'event'}
+              {getCategoryIcon(benefit.category)}
             </span>
             {benefit.category}
           </span>

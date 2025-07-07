@@ -1,20 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import BenefitCard from './BenefitCard';
-
-interface Benefit {
-  id: string;
-  title: string;
-  description: string;
-  cost: number;
-  category: string;
-  image: string;
-  categoryIcon: string;
-  featured?: boolean;
-}
+import { BenefitData } from '../data/benefits';
 
 interface RecommendedCarouselProps {
-  benefits: Benefit[];
-  onBenefitClick: (benefit: Benefit) => void;
+  benefits: BenefitData[];
+  onBenefitClick: (benefit: BenefitData) => void;
 }
 
 // Función para repetir el array hasta tener al menos n elementos
@@ -56,7 +46,7 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
 
   // Para mostrar 5 cards, centrando la activa
   const getVisibleBenefits = () => {
-    const visible: Benefit[] = [];
+    const visible: BenefitData[] = [];
     for (let i = -2; i <= 2; i++) {
       const idx =
         (currentIndex + i + repeatedBenefits.length) % repeatedBenefits.length;
@@ -107,7 +97,7 @@ const RecommendedCarousel: React.FC<RecommendedCarouselProps> = ({
                     }
                   >
                     <BenefitCard
-                      benefit={{ ...benefit, featured: isActive }}
+                      benefit={benefit}
                       onClick={onBenefitClick}
                       variant='carousel'
                     />
